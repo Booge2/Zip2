@@ -136,3 +136,79 @@ if __name__ == "__main__":
 # Завдання 3
 
 
+class Fraction:
+    def __init__(self, numerator, denominator):
+        self.numerator = numerator
+        self.denominator = denominator
+
+    def pack_in_json(self):
+        fraction_dict = {"numerator": self.numerator, "denominator": self.denominator}
+        return json.dumps(fraction_dict)
+
+    @staticmethod
+    def unpacked_with_json(json_str):
+        fraction_dict = json.loads(json_str)
+        return Fraction(fraction_dict["numerator"], fraction_dict["denominator"])
+
+    def pack_in_pickle(self):
+        return pickle.dumps(self)
+
+    @staticmethod
+    def unpacked_with_pickle(pickle_data):
+        return pickle.loads(pickle_data)
+
+
+fraction = Fraction(3, 4)
+
+json_data = fraction.pack_in_json()
+print("JSON дані:", json_data)
+
+unpacked_fraction = fraction.unpacked_with_json(json_data)
+print("Розпакований fraction:", unpacked_fraction.numerator, "/", unpacked_fraction.denominator)
+
+pickle_data = fraction.pack_in_pickle()
+print("Pickle дані:", pickle_data)
+
+unpacked_fraction = fraction.unpacked_with_pickle(pickle_data)
+print("Розпакований fraction:", unpacked_fraction.numerator, "/", unpacked_fraction.denominator)
+
+
+# Завдання 4
+
+
+class Clock:
+    def __init__(self, hours, minutes, seconds):
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
+
+    def pack_in_json(self):
+        return json.dumps({"hours": self.hours, "minutes": self.minutes, "seconds": self.seconds})
+
+    @staticmethod
+    def unpacked_with_json(json_data):
+        dct_clock = json.loads(json_data)
+        return Clock(dct_clock["hours"], dct_clock["minutes"], dct_clock["seconds"])
+
+    def pack_in_pickle(self):
+        return pickle.dumps({"hours": self.hours, "minutes": self.minutes, "seconds": self.seconds})
+
+    @staticmethod
+    def unpacked_with_pickle(pickle_data):
+        dct_clock = pickle.loads(pickle_data)
+        return Clock(dct_clock["hours"], dct_clock["minutes"], dct_clock["seconds"])
+
+
+clock = Clock(10, 30, 45)
+
+json_data = clock.pack_in_json()
+print("JSON дані:", json_data)
+
+unpacked_clock = clock.unpacked_with_json(json_data)
+print("Розпакований годинник:", unpacked_clock.hours, "год", unpacked_clock.minutes, "хв", unpacked_clock.seconds, "сек")
+
+pickle_data = clock.pack_in_pickle()
+print("Pickle дані:", pickle_data)
+
+unpacked_clock = clock.unpacked_with_pickle(pickle_data)
+print("Розпакований годинник:", unpacked_clock.hours, "год", unpacked_clock.minutes, "хв", unpacked_clock.seconds, "сек")
